@@ -68,7 +68,12 @@ canvas:focus { outline-offset: -4px; }
 .help p + p { margin-top: 3px; }
 .match-help { margin-top: 13px; border-top: 1px solid var(--edge); padding-top: 9px; }
 kbd { font: 700 .85em/1.2 ui-monospace, monospace; background: #523b4b; padding: 2px 4px; border-radius: 2px; color: var(--text); white-space: nowrap; }
-.touch { display: none; }
+.touch { display: none; justify-content: space-evenly; gap: 8px; margin-top: 10px; }
+.touch-enabled .touch { display: flex; }
+.touch-grid { display: grid; grid-template-columns: repeat(3, minmax(43px, 1fr)); gap: 5px; flex: 1; max-width: 320px; }
+.touch button { color: var(--text); background: #3b2835; min-height: 43px; border-radius: 4px; border: 1px solid #8b7282; touch-action: none; padding: 3px; }
+.touch button.held { background: #735569; }
+#touch-launch { grid-column: span 2; color: #2e1c15; background: var(--gold); font-weight: 800; }
 
 @media (max-width: 680px) {
   main { width: calc(100% - 24px); padding-top: 16px; }
@@ -85,10 +90,4 @@ kbd { font: 700 .85em/1.2 ui-monospace, monospace; background: #523b4b; padding:
   .strip .controllers { flex-basis: auto; margin-left: 0; }
   .help-grid { grid-template-columns: 1fr; }
 }
-@media (pointer: coarse) {
-  .touch { display: flex; justify-content: space-evenly; gap: 8px; margin-top: 10px; }
-  .touch-grid { display: grid; grid-template-columns: repeat(3, minmax(43px, 1fr)); gap: 5px; flex: 1; max-width: 320px; }
-  .touch button { color: var(--text); background: #3b2835; min-height: 43px; border-radius: 4px; border: 1px solid #8b7282; touch-action: none; padding: 3px; }
-  .touch button.held { background: #735569; }
-  #touch-launch { grid-column: span 2; color: #2e1c15; background: var(--gold); font-weight: 800; }
-}
+@media (any-pointer: coarse) { .touch { display: flex; } }
