@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#24151a">
-  <meta name="description" content="Drive Rouse Inferno's FTC robot in an interactive BIOBUZZ practice match. Play solo or share the screen with a friend.">
+  <meta name="description" content="Drive Rouse Inferno's FTC robot in a BIOBUZZ practice match. Play solo, share a screen, or play a friend online.">
   <title>BIOBUZZ Practice | Rouse Inferno</title>
   <link rel="icon" href="./inferno.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./practice.css?v=2">
-  <script src="./practice.js?v=2" type="module"></script>
+  <link rel="stylesheet" href="./practice.css?v=3">
+  <script src="./practice.js?v=3" type="module"></script>
 </head>
 <body>
   <header class="mast">
@@ -22,13 +22,14 @@
     <div class="intro">
       <h1>Robot practice</h1>
       <div class="settings">
-        <label>Next match
+        <label id="mode-label">Next match
           <select id="mode"><option>Solo</option><option value="Two players">Two Players</option></select>
         </label>
         <label id="difficulty-label">Red AI
           <select id="difficulty"><option>Easy</option><option selected>Medium</option><option>Hard</option></select>
         </label>
         <button class="action" id="restart" type="button" disabled>Start match</button>
+        <button class="quiet room-button" id="online" type="button" disabled>Play online</button>
       </div>
     </div>
     <section class="match" aria-label="Match simulator">
@@ -112,7 +113,38 @@
         </section>
       </div>
       <p class="match-help"><kbd>M</kbd> selects Solo or Two Players. <kbd>1 2 3</kbd> or Blue D-pad left / up / right selects Solo difficulty. <kbd>R</kbd> starts a new match. Drive the intake into Pollen to collect it. Balls that land in a tray score for that goal’s team.</p>
+      <p class="match-help">Online, the host drives Blue and the guest drives Red. Red can also use <kbd>W S</kbd> to drive, <kbd>A D</kbd> or <kbd>Q E</kbd> to turn, arrows to aim, and <kbd>Space</kbd> to launch. <kbd>V</kbd> switches your own camera.</p>
     </details>
   </main>
+  <dialog id="room-dialog" aria-labelledby="room-title">
+    <div class="room-heading">
+      <h2 id="room-title">Play online</h2>
+      <button class="quiet" id="room-close" type="button" aria-label="Close room menu">Close</button>
+    </div>
+    <div id="room-menu">
+      <button class="action" id="room-create" type="button">Create room</button>
+      <form id="room-join-form" class="room-join">
+        <label for="join-code">Room code</label>
+        <div class="room-actions">
+          <input id="join-code" name="code" placeholder="XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" required>
+          <button class="quiet" type="submit">Join room</button>
+        </div>
+      </form>
+    </div>
+    <div id="room-active" hidden>
+      <p id="room-side"></p>
+      <label for="share-code">Room code</label>
+      <div class="room-actions">
+        <input id="share-code" readonly>
+        <button class="quiet" id="copy-code" type="button">Copy code</button>
+        <button class="quiet" id="copy-invite" type="button">Copy invite</button>
+      </div>
+      <div class="room-actions room-exit">
+        <button class="quiet" id="room-leave" type="button">Leave room</button>
+        <button class="quiet" id="room-retry" type="button" hidden>Try again</button>
+      </div>
+    </div>
+    <p id="room-message" role="status"></p>
+  </dialog>
 </body>
 </html>
